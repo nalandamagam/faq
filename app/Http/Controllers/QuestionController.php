@@ -1,20 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Answer;
-use Illuminate\Http\Request;
 
-class AnswerController extends Controller
+use Illuminate\Http\Request;
+use App\Question;
+use Illuminate\Support\Facades\Auth;
+
+
+class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index()
     {
         //
@@ -47,11 +50,11 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($question,  $answer)
+    public function show(Question $question)
     {
-        $answer = Answer::find($answer);
-        return view('answer')->with(['answer' => $answer, 'question' => $question]);
+        return view('question')->with('question', $question);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
